@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
+from typing import List
 import shutil, os
 from face_service import get_embedding
 from database import add_embedding, search_embedding
@@ -8,8 +9,9 @@ app = FastAPI()
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# 📸 رفع صور المناسبة
 @app.post("/upload-event-images/")
-async def upload_event_images(files: list[UploadFile] = File(...)):
+async def upload_event_images(files: List[UploadFile] = File(...)):
     results = []
 
     for file in files:
@@ -26,6 +28,7 @@ async def upload_event_images(files: list[UploadFile] = File(...)):
     return {"files": results}
 
 
+# 🔍 البحث عن الشخص
 @app.post("/search/")
 async def search(file: UploadFile = File(...)):
     file_path = f"{UPLOAD_FOLDER}/query_{file.filename}"
