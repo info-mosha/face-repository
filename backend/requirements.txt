@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+deepface
+faiss-cpu
+python-multipart
+opencv-python
+numpy
